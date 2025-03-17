@@ -15,15 +15,14 @@ def create_app(test_config=None):
         app.config.update(test_config)
 
     from app.api import api_home
-    app.register_blueprint(api_home)
+    app.register_blueprint(api_home,url_prefix="/home")
 
     from app.api.product import api_upload_csv
-    app.register_blueprint(api_upload_csv)
+    app.register_blueprint(api_upload_csv,url_prefix="/api/")
 
     db.init_app(app)
 
     ma.init_app(app)
-
 
 
     @app.errorhandler(HTTPStatus.INTERNAL_SERVER_ERROR)

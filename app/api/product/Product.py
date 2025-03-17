@@ -26,6 +26,7 @@ class Product:
         self.input_image_urls = input_image_urls
         self.output_image_urls = output_image_urls or []
 
+
     def reduce_50_percent(self, image_url):
         """Fetch image from URL, resize to 50% and return the processed image."""
         response = requests.get(image_url)
@@ -37,6 +38,8 @@ class Product:
         else:
             raise Exception(f"Failed to fetch image from {image_url}")
 
+
+
     def save_image(self, image, file_name):
         """Save the processed image and return the saved file path."""
         save_dir = "processed_images"
@@ -44,6 +47,7 @@ class Product:
         save_path = os.path.join(save_dir, file_name)
         image.save(save_path)
         return save_path
+
 
     def read_csv_file(self, file_path):
         """Read CSV file, validate values, resize images, and update the database."""

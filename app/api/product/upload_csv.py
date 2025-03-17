@@ -4,15 +4,17 @@ from flask import request, jsonify
 from marshmallow import fields, ValidationError
 from app.settings import ma
 from . import api_upload_csv
-from .Product import  Product   # Assuming Product is in product_model.py
+from .Product import Product
 import tempfile
 
 class RequestBodySchema(ma.Schema):
     file_data = fields.Str(required=True, error_messages={"required": "Base64-encoded CSV data is required."})
+    file_name = fields.Str(required=True, error_messages={"required": "file name is required."})
+
 
 request_body_schema = RequestBodySchema()
 
-@api_upload_csv.route("/api/upload", methods=["POST"])
+@api_upload_csv.route("/upload", methods=["POST"])
 def upload_csv():
     try:
         # Validate input data using RequestBodySchema (includes ProductSchema validation)
@@ -30,7 +32,8 @@ def upload_csv():
             f.write(file_data)
 
         # Process CSV file
-        product = Product()
+        product = Product("2","sk","dasd")
+
         product.read_csv_file(file_path)
 
         return jsonify({"message": "CSV processed successfully"}), 200
